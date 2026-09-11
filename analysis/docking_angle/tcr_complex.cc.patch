@@ -1,0 +1,12 @@
+diff --git a/tcr_complex.cc b/tcr_complex.cc
+index 8becf06..5093f5c 100644
+--- a/tcr_complex.cc
++++ b/tcr_complex.cc
+@@ -17,6 +17,7 @@ TCRComplex::TCRComplex(string tcrfile, string pepmhcfile, int mhc_type)
+   my_pep_chain = "C";
+     
+   my_mhc_type = mhc_type;
++  IsClassII = false;
+   if (my_mhc_type == 1) IsClassII = true;
+ 
+   my_z_offset = 25.0;
