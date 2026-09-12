@@ -1,4 +1,4 @@
-# Protenix v1 run scripts — mixed cluster origin
+# Protenix v1 run scripts - mixed cluster origin
 
 The three input conditions for Protenix v1 were run on two different
 machines:

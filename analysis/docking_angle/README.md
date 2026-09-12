@@ -3,7 +3,7 @@
 Measures how well each predicted structure reproduces the native TCR–pMHC
 docking geometry (docking angle, incident angle, TCR–pMHC center distance),
 using the Pierce lab's `tcr_docking_angle` tool. This directory holds the
-wrapper written for this study; the tool itself is *not* included here — see
+wrapper written for this study; the tool itself is *not* included here - see
 [Running it](#running-it) below for the full build recipe.
 
 ## What each file does
@@ -14,15 +14,15 @@ wrapper written for this study; the tool itself is *not* included here — see
 | `angle_worker.sh` | Processes **one job**: takes a tab-separated job description (`pdb\tmodel\tmhc_class\tcondition\trank\tmhc_type`), calls `angle_one.py` on it, and emits one formatted TSV row (falls back to a `FAIL:no_result` row if `angle_one.py` produced nothing usable). |
 | `batch_angles.sh` | Drives the **whole batch**: finds every `ranked_*` predicted PDB under a `pred_pdb/` tree plus every native reference structure, builds the job list, and fans it out to `angle_worker.sh` in parallel via `xargs -P`. Writes the combined TSV. |
 | `analyze_angles.py` | Aggregates the batch TSV against the native angles: computes per-target docking-/incident-angle error, then prints summary tables (mean/median/% within threshold) for rank-0 and for best-of-5, split by model and condition. |
-| `inspect_chains.py` | Standalone debug helper — prints chain IDs, residue counts, and the first ~65 residues of each chain's sequence for one or more PDB files. Useful for sanity-checking a structure before/after running the pipeline above; not part of the batch itself. |
-| `tcr_complex.cc.patch` | One-line fix to the upstream tool's `tcr_complex.cc` (initializes `IsClassII` in the constructor) — applied during the build below. |
+| `inspect_chains.py` | Standalone debug helper - prints chain IDs, residue counts, and the first ~65 residues of each chain's sequence for one or more PDB files. Useful for sanity-checking a structure before/after running the pipeline above; not part of the batch itself. |
+| `tcr_complex.cc.patch` | One-line fix to the upstream tool's `tcr_complex.cc` (initializes `IsClassII` in the constructor) - applied during the build below. |
 
 ## Running it
 
 ### 1. Environment and build
 
 This is the recipe actually used to get the tool building and running on a
-plain Linux box with no sudo and no pre-existing conda or module system —
+plain Linux box with no sudo and no pre-existing conda or module system -
 one isolated conda env with everything needed (compiler, GSL, ANARCI, HMMER,
 Biopython):
 
@@ -55,7 +55,7 @@ git apply /path/to/this/repo/analysis/docking_angle/tcr_complex.cc.patch
 export REPO=$(pwd)
 
 # 1) Build the FAST library. Its Makefile is macOS-named (produces a
-#    .dylib) — rename it so the main build's -lfast can find it on Linux:
+#    .dylib) - rename it so the main build's -lfast can find it on Linux:
 cd "$REPO/fast"
 make clean
 make libs CC="$CC -O3 -w -I."
@@ -77,7 +77,7 @@ ldd ./tcr_docking_angle | grep -i gsl # should resolve to your conda env's libgs
 ./tcr_docking_angle                   # no args -> prints usage/MHC-type help text
 ```
 
-(If you have GSL installed system-wide instead — e.g. via `apt`, with sudo —
+(If you have GSL installed system-wide instead - e.g. via `apt`, with sudo -
 a plain `make` without the `INCLUDES`/`GSL_LIBS` overrides should also work;
 the conda-based recipe above is for environments without root access.)
 
@@ -88,12 +88,12 @@ binary you just built).
 ### 2. Configure paths
 
 Edit the paths hardcoded near the top of `batch_angles.sh`:
-- `REPO` — your `$REPO` from above.
-- `BENCH` / `PRED` / `TRUE_I` — your Lu et al. checkout, its
+- `REPO` - your `$REPO` from above.
+- `BENCH` / `PRED` / `TRUE_I` - your Lu et al. checkout, its
   `benchmark/pred_pdb/` tree (from [stage 3](../../README.md#pipeline) of
   this repo's pipeline), and its native Class I reference PDBs
   (`benchmark_data/class-i/pdb/`).
-- `INCLUDE` — which model names under `pred_pdb/` to process (defaults to
+- `INCLUDE` - which model names under `pred_pdb/` to process (defaults to
   `af3 protenix_v1 protenix_v2 intellifold2`).
 
 ### 3. Run the batch
@@ -121,6 +121,6 @@ stdout: rank-0 vs. native, and best-of-5 vs. native.
 As written, this batch pipeline only handles Class I complexes:
 `angle_one.py`'s chain-role classifier (`classify_classI`) explicitly raises
 if it finds more than the 4 expected chains (it would need Class-II-specific
-handling — a second MHC chain — to go further), and `batch_angles.sh` only
+handling - a second MHC chain - to go further), and `batch_angles.sh` only
 looks under `.../classI/...` paths. There is no Class II equivalent in this
 repository.

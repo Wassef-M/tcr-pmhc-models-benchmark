@@ -10,7 +10,7 @@ cluster (Helmholtz), using these two array jobs (`#SBATCH --array=1-56`):
 
 The no-MSA condition was produced with the same `run_intellifold2_v2.sh`
 script, pointed at the no-MSA YAML inputs instead (per-chain `msa: empty`,
-see `input_prep/intellifold2/add_empty_msa_to_yamls.py`) — there is no
+see `input_prep/intellifold2/add_empty_msa_to_yamls.py`) - there is no
 separate no-MSA script.
 
 Both scripts use `--use_msa_server` (a remote MSA server, not a local

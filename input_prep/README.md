@@ -1,7 +1,7 @@
 # Input generation
 
 All model inputs for this study derive from one base directory,
-`classI_jsons/` — one **bare** AF3-schema JSON per target: just chain IDs and
+`classI_jsons/` - one **bare** AF3-schema JSON per target: just chain IDs and
 sequences, with the `unpairedMsa`/`pairedMsa`/`templates` fields entirely
 absent (not set empty). Built by `af3/build_classI_jsons.py` from Lu et al.'s
 per-target sequence file, `TCR-pMHC-folding-benchmark-main/benchmark_data/class-i-seqs.json`
@@ -10,7 +10,7 @@ repository).
 
 Because those fields are *absent* rather than empty, this base JSON is what
 AF3's own data pipeline consumes directly for the **MSA + template**
-condition — it computes the MSA and searches for templates itself at
+condition - it computes the MSA and searches for templates itself at
 runtime. The other conditions are derived by explicitly disabling that
 search:
 
