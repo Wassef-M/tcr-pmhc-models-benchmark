@@ -42,7 +42,9 @@ analysis/                 Cross-model analysis, written for this study
   extract_iptm_v4.py       Confidence-score (iPTM/pTM) extraction, all models
   extract_timing_v2.py     Wall-clock runtime extraction, all models
   docking_angle/           Wrapper around the Pierce lab tcr_docking_angle tool
-results/                  Final computed metrics and timings (CSV/TSV)
+results/                  Final computed metrics and timings (CSV/TSV),
+                          plus generating_figures.ipynb which reproduces the
+                          report's figures from them
 ```
 
 ## Pipeline
@@ -96,6 +98,12 @@ results/                  Final computed metrics and timings (CSV/TSV)
    the native structures. `tcr_complex.cc.patch` is a one-line fix (init
    `IsClassII` in the constructor) applied on top of the upstream tool - see
    [Setup](#setup) for how to set this up.
+7. **Figures.** [`results/generating_figures.ipynb`](results/generating_figures.ipynb)
+   loads the CSVs/TSVs in `results/` (the outputs of stages 4-6 above) and
+   reproduces the report's Class I figures: DockQ across models/conditions,
+   rank-0 vs. best-of-5, RMSD by region, CDR RMSD, confidence-vs-accuracy
+   correlations, docking-geometry error, and runtime. It's already been run,
+   so the figures render directly on GitHub without needing to re-execute it.
 
 ## Setup
 
